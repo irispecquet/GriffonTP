@@ -17,15 +17,21 @@ public class SystemManager : MonoBehaviour
     }
     #endregion Singleton
 
-
+    #region States
     public IStateSystem currentState;
+    public DrawState DrawState = new DrawState();
     public PubState PubState = new PubState();
     public HostelState HostelState = new HostelState();
-    public DrawState DrawState = new DrawState();
+    #endregion States
+
+    public CardDrawer Drawer;
+    public CardDrawer Trash;
+    public CardDrawer Pub;
+    public CardDrawer Hostel;
 
     private void Start()
     {
-        ChangeState(PubState);
+        ChangeState(DrawState);
     }
 
     private void Update()

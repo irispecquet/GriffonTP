@@ -43,4 +43,20 @@ public class CardDrawer : MonoBehaviour
 
         return cardData;
     }
+
+    public CardData GetCard(int cardNumber)
+    {
+        if (cardNumber < _cards.Count)
+            return _cards[cardNumber];
+        else
+        {
+            Debug.LogError("Outside Length of " + gameObject.name + " card list of " + (cardNumber - _cards.Count));
+            return null;
+        }
+    }
+
+    public int GetCardLength()
+    {
+        return _cards.Count;
+    }
 }
