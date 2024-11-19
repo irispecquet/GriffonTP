@@ -5,20 +5,34 @@ using UnityEngine;
 public class PubState : IStateSystem
 {
     float _timer = 0;
+    int iterationNumber = 0;
+
     public void OnEnter(SystemManager controller)
     {
         _timer = controller.CardTimerMove;
+
+        for (int i = 0; i < controller.Hostel.GetCardLength(); i++)
+        {
+            if (controller.Hostel.CardPlaces[i].CardInPlace == null)
+            {
+                iterationNumber = i;
+                break;
+            }
+        }
     }
 
     public void UpdateState(SystemManager controller)
     {
-        if (controller.CardSelected != null && _timer >= 0)
+        if (controller.CardSelected != null)
         {
-            _timer -= Time.deltaTime;
-            controller.CardSelected.transform.position = Vector3.Lerp(controller.CardSelected.transform.position, controller.Hostel.CardPlaces[controller.Hostel.GetCardLength()].TransformCard.position, 0.01f);
+            if (_timer >= 0)
+            {
+                _timer -= Time.deltaTime;
+                controller.CardSelected.transform.position = Vector3.Lerp(controller.CardSelected.transform.position, controller.Hostel.CardPlaces[iterationNumber].TransformCard.position, 0.01f);
+            }
+            else if (_timer <= 0)
+                controller.ChangeState(controller.HostelState);
         }
-        else if (_timer <= 0)
-            controller.ChangeState(controller.HostelState);
     }
 
     public void OnExit(SystemManager controller)
@@ -26,6 +40,10 @@ public class PubState : IStateSystem
         CardData cardToChange = controller.CardSelected.GetComponent<CardComponent>().CardData;
 
         controller.Hostel.AddCard(cardToChange);
+        controller.Hostel.CardPlaces[iterationNumber].CardInPlace = cardToChange;
+
+        controller.Pub.CardPlaces[controller.Pub.GetCardPosInList(cardToChange)].CardInPlace = null;
+
         controller.Pub.DeleteCard(cardToChange);
 
         controller.CardSelected = null;

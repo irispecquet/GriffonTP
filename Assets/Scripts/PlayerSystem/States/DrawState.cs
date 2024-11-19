@@ -12,27 +12,27 @@ public class DrawState : IStateSystem
     {
         _timer = controller.CardTimerMove;
 
-        int numberCardsPub = controller.Pub.GetCardLength();
-
-        if (numberCardsPub >= 4)
+        if (controller.Pub.GetCardLength() >= 4)
             return;
 
-        int numberCardsDrawer = controller.Drawer.GetCardLength();
-
-        for (int i = 0; i < 4 - numberCardsPub; i++)
+        for (int j = 0; j < 4; j++)
         {
-            if (controller.Drawer.GetCardLength() <= 0)
-                break;
+            if (controller.Pub.CardPlaces[j].CardInPlace == null)
+            {
+                if (controller.Drawer.GetCardLength() < 0)
+                    break;
 
-            CardData cardToChange = controller.Drawer.GetCard(numberCardsDrawer - 1 - i);
+                CardData cardToChange = controller.Drawer.GetCard(controller.Drawer.GetCardLength() - 1);
 
-            controller.Pub.AddCard(cardToChange);
-            controller.Drawer.DeleteCard(cardToChange);
+                controller.Pub.AddCard(cardToChange);
+                controller.Drawer.DeleteCard(cardToChange);
 
-            _movingCards.Add(SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform);
-            controller.Pub.CardPlaces[i].CardInPlace = cardToChange;
-            //SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform.position = controller.Pub.CardsTransform[i].position;
+                _movingCards.Add(SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform);
+
+                controller.Pub.CardPlaces[j].CardInPlace = cardToChange;
+            }
         }
+        //SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform.position = controller.Pub.CardsTransform[i].position;
     }
 
     public void UpdateState(SystemManager controller)
@@ -41,28 +41,28 @@ public class DrawState : IStateSystem
         {
             _timer -= Time.deltaTime;
 
-            for (int j = 0; j < _movingCards.Count; j++)
+            for (int i = 0; i < _movingCards.Count; i++)
             {
-                for (int i = 0; i < 4; i++)
+                for (int j = 0; j < controller.Pub.CardPlaces.Count; j++)
                 {
-                    var card = controller.Pub.CardPlaces[i].CardInPlace;
+                    CardData card = controller.Pub.CardPlaces[j].CardInPlace;
 
-                    if (card != null && card == _movingCards[j].GetComponent<CardComponent>().CardData)
+                    if (card == _movingCards[i].GetComponent<CardComponent>().CardData)
                     {
-                        _movingCards[j].position = Vector3.Lerp(_movingCards[j].position, controller.Pub.CardPlaces[i].TransformCard.position, 0.01f);
+                        _movingCards[i].position = Vector3.Lerp(_movingCards[i].position, controller.Pub.CardPlaces[j].TransformCard.position, 0.01f);
                     }
                 }
             }
         }
         else
         {
-            _movingCards.Clear();
             controller.ChangeState(controller.PubState);
         }
     }
 
     public void OnExit(SystemManager controller)
     {
+        _movingCards.Clear();
 
     }
 }
