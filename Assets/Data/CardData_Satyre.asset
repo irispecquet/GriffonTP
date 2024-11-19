@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardData_Satyre
   m_EditorClassIdentifier: 
   <Name>k__BackingField: "Le Satyre angoiss\xE9"
+  <ID>k__BackingField: 16
   <ResourceType>k__BackingField: 1
   <Penalty>k__BackingField: 2
   <PenaltyMultiplier>k__BackingField: 1

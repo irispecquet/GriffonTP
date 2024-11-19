@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardData_Nain
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Le Nain saoul
+  <ID>k__BackingField: 11
   <ResourceType>k__BackingField: 2
   <Penalty>k__BackingField: 1
   <PenaltyMultiplier>k__BackingField: 1

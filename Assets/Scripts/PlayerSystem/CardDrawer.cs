@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CardDrawer : MonoBehaviour
 {
+    public List<Transform> CardsTransform;
     [SerializeField] List<CardData> _cards = new();
 
     public void AddCard(CardData card)

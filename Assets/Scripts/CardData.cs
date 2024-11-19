@@ -6,6 +6,7 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     [field: SerializeField] public string Name { get; private set; }
+    [field: SerializeField] public int ID { get; private set; }
     [field: SerializeField] public ResourceType ResourceType { get; private set; }
     [field: SerializeField] public CardPenalty Penalty { get; private set; }
     [field: SerializeField] public int PenaltyMultiplier { get; private set; } = 1;

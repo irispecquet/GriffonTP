@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardData_Mage
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Le Mage du Temps
+  <ID>k__BackingField: 8
   <ResourceType>k__BackingField: 2
   <Penalty>k__BackingField: 1
   <PenaltyMultiplier>k__BackingField: 1

@@ -29,8 +29,25 @@ public class SystemManager : MonoBehaviour
     public CardDrawer Pub;
     public CardDrawer Hostel;
 
+    [SerializeField] GameObject _cardPrefab;
+    public CardData[] _cardDatas;
+    public Dictionary<int, GameObject> CardsOnBoard = new();
+
     private void Start()
     {
+        for (int i = 0; i < _cardDatas.Length; i++)
+        {
+            GameObject card = Instantiate(_cardPrefab, Drawer.transform.position, Quaternion.identity);
+            CardComponent cardData = card.GetComponent<CardComponent>();
+            cardData.CardData = _cardDatas[i];
+            CardsOnBoard.Add(cardData.CardData.ID, card);
+        }
+
+        foreach (var item in CardsOnBoard)
+        {
+            Drawer.AddCard(item.Value.GetComponent<CardComponent>().CardData);
+        }
+
         ChangeState(DrawState);
     }
 

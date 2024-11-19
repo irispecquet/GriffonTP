@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardData_Religieuse
   m_EditorClassIdentifier: 
   <Name>k__BackingField: La Religieuse abstinante
+  <ID>k__BackingField: 15
   <ResourceType>k__BackingField: 1
   <Penalty>k__BackingField: 4
   <PenaltyMultiplier>k__BackingField: 1

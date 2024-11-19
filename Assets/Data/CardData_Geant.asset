@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardData_Geant
   m_EditorClassIdentifier: 
   <Name>k__BackingField: "Le G\xE9ant charitable"
+  <ID>k__BackingField: 3
   <ResourceType>k__BackingField: 2
   <Penalty>k__BackingField: 2
   <PenaltyMultiplier>k__BackingField: 1

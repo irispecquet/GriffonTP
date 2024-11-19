@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CardData_Magicien
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Le Magicien Maladroit
+  <ID>k__BackingField: 9
   <ResourceType>k__BackingField: 2
   <Penalty>k__BackingField: 4
   <PenaltyMultiplier>k__BackingField: 1
