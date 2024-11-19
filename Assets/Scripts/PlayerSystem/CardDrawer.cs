@@ -54,6 +54,11 @@ public class CardDrawer : MonoBehaviour
         return null;
     }
 
+    public CardData[] GetAllCards()
+    {
+        return _cards.ToArray();
+    }
+
     public CardData this[int cardNumber] => GetCard(cardNumber);
     public CardData this[CardData card] => GetCard(card);
 

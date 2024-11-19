@@ -24,6 +24,7 @@ public enum ResourceType
 [Flags]
 public enum CardPenalty
 {
+    NONE = 0,
     FIGHT = 1 << 0,
     SMELL = 1 << 1,
     LOUD = 1 << 2,
