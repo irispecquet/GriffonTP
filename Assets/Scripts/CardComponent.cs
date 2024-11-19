@@ -6,28 +6,34 @@ public class CardComponent : MonoBehaviour
 {
     public CardData CardData;
 
+    #region CONDITIONS
+
     [Button]
     public bool IsStaying()
     {
-        bool isStaying = true;
-
-        if (!CheckPenalty(ref isStaying))
-            return isStaying;
+        if (!CheckPenalty())
+        {
+            Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS NOT STAYING");
+            return false;
+        }
 
         foreach (CardCondition condition in CardData.Conditions)
         {
             CardData[] dataByPlace = GetDataByPlace(condition.Place);
             int cardIndex = Array.IndexOf(dataByPlace, CardData);
 
-            if (!EvaluateCondition(condition, dataByPlace, cardIndex, ref isStaying))
-                break;
+            if (!EvaluateCondition(condition, dataByPlace, cardIndex))
+            {
+                Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS NOT STAYING");
+                return false;
+            }
         }
 
-        Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS {(isStaying ? "" : "NOT")} STAYING");
-        return isStaying;
+        Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS STAYING");
+        return true;
     }
 
-    private bool CheckPenalty(ref bool isStaying)
+    private bool CheckPenalty()
     {
         if (CardData.CurrentPenalty == CardPenalty.NONE)
             return true;
@@ -39,62 +45,47 @@ public class CardComponent : MonoBehaviour
             if (card.Penalty == CardData.CurrentPenalty)
             {
                 currentPenaltyCount += card.PenaltyMultiplier;
-
-                if (currentPenaltyCount >= 3)
-                {
-                    isStaying = false;
-                    return false;
-                }
+                return currentPenaltyCount < 3;
             }
         }
 
         return true;
     }
 
-    private bool EvaluateCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex, ref bool isStaying)
+    private bool EvaluateCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex)
     {
         switch (condition.Type)
         {
             case ConditionType.RESOURCE:
-                return EvaluateResourceCondition(condition, dataByPlace, cardIndex, ref isStaying);
+                return EvaluateResourceCondition(condition, dataByPlace, cardIndex);
             case ConditionType.CUSTOMER:
-                return EvaluateCustomerCondition(condition, dataByPlace, ref isStaying);
+                return EvaluateCustomerCondition(condition, dataByPlace);
             case ConditionType.FLOOR:
-                return EvaluateFloorCondition(condition, dataByPlace, cardIndex, ref isStaying);
+                return EvaluateFloorCondition(condition, dataByPlace, cardIndex);
             case ConditionType.PENALTY:
-                return EvaluatePenaltyCondition(condition, dataByPlace, cardIndex, ref isStaying);
+                return EvaluatePenaltyCondition(condition, dataByPlace, cardIndex);
             default:
                 return true;
         }
     }
 
-    private bool EvaluateResourceCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex,
-        ref bool isStaying)
+    private bool EvaluateResourceCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex)
     {
         if (condition.Comparison == ComparisonType.OPERATOR)
         {
             int resourceCount = CountMatchingResources(dataByPlace, condition.Resource);
             int resourceTargetCount = GetResourceTargetCount(condition, dataByPlace);
 
-            if (ComparisonEvaluator.Evaluate(resourceCount, condition.Operator, resourceTargetCount))
-            {
-                isStaying = false;
-                return false;
-            }
+            return !ComparisonEvaluator.Evaluate(resourceCount, condition.Operator, resourceTargetCount);
         }
-        else if (condition.Comparison == ComparisonType.RELATIVE_POSITION)
-        {
-            if (!CheckRelativePosition(dataByPlace, cardIndex, condition.Resource, condition.Position))
-            {
-                isStaying = false;
-                return false;
-            }
-        }
+
+        if (condition.Comparison == ComparisonType.RELATIVE_POSITION)
+            return CheckRelativePosition(dataByPlace, cardIndex, condition.Resource, condition.Position);
 
         return true;
     }
 
-    private bool EvaluateCustomerCondition(CardCondition condition, CardData[] dataByPlace, ref bool isStaying)
+    private bool EvaluateCustomerCondition(CardCondition condition, CardData[] dataByPlace)
     {
         if (condition.Comparison != ComparisonType.OPERATOR)
             return true;
@@ -102,52 +93,27 @@ public class CardComponent : MonoBehaviour
         int customerCount = CountMatchingCustomers(dataByPlace, condition.CustomerName);
         int customerTargetCount = condition.TargetType == ConditionType.VALUE ? condition.TargetValue : 0;
 
-        if (ComparisonEvaluator.Evaluate(customerCount, condition.Operator, customerTargetCount))
-        {
-            isStaying = false;
-            return false;
-        }
-
-        return true;
+        return !ComparisonEvaluator.Evaluate(customerCount, condition.Operator, customerTargetCount);
     }
 
-    private bool EvaluateFloorCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex,
-        ref bool isStaying)
+    private bool EvaluateFloorCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex)
     {
         if (condition.Comparison == ComparisonType.RELATIVE_POSITION)
         {
-            if ((condition.Position == RelativePosition.HIGHEST && cardIndex <= 0) ||
-                (condition.Position == RelativePosition.LOWEST && cardIndex >= dataByPlace.Length - 1))
-            {
-                isStaying = false;
-                return false;
-            }
-        }
-        else if (condition.Comparison == ComparisonType.OPERATOR)
-        {
-            if (ComparisonEvaluator.Evaluate(cardIndex, condition.Operator, condition.TargetValue))
-            {
-                isStaying = false;
-                return false;
-            }
+            return (condition.Position != RelativePosition.HIGHEST || cardIndex > 0) &&
+                   (condition.Position != RelativePosition.LOWEST || cardIndex < dataByPlace.Length - 1);
         }
 
-        return true;
+        return condition.Comparison != ComparisonType.OPERATOR || 
+               !ComparisonEvaluator.Evaluate(cardIndex, condition.Operator, condition.TargetValue);
     }
 
-    private bool EvaluatePenaltyCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex,
-        ref bool isStaying)
+    private bool EvaluatePenaltyCondition(CardCondition condition, CardData[] dataByPlace, int cardIndex)
     {
-        if (condition.Comparison == ComparisonType.RELATIVE_POSITION &&
-            condition.Position == RelativePosition.ABOVE &&
-            cardIndex > 0 &&
-            dataByPlace[cardIndex - 1].Penalty == condition.Penalty)
-        {
-            isStaying = false;
-            return false;
-        }
-
-        return true;
+        return condition.Comparison != ComparisonType.RELATIVE_POSITION ||
+               condition.Position != RelativePosition.ABOVE ||
+               cardIndex <= 0 ||
+               dataByPlace[cardIndex - 1].Penalty != condition.Penalty;
     }
 
     private int CountMatchingResources(CardData[] dataByPlace, ResourceType resourceType)
@@ -196,6 +162,8 @@ public class CardComponent : MonoBehaviour
 
         return true;
     }
+        
+    #endregion // CONDITIONS
 
     private void OnMouseDown()
     {

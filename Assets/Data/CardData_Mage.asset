@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac9965d526e4acfa25bde76dc2063e7, type: 3}
   m_Name: CardData_Mage
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Le Mage du Temps
+  <Name>k__BackingField: La Mage du Temps
   <ID>k__BackingField: 8
   <ResourceType>k__BackingField: 2
   <Penalty>k__BackingField: 1
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 9829425df8570d74f904cfbf843aae2a, type: 3}
   <PenaltyMultiplier>k__BackingField: 1
   <Conditions>k__BackingField:
   - <Type>k__BackingField: 2

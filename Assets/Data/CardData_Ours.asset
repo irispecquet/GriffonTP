@@ -16,6 +16,7 @@ MonoBehaviour:
   <ID>k__BackingField: 12
   <ResourceType>k__BackingField: 2
   <Penalty>k__BackingField: 1
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 158aa48a30a2e5049a4a0023f02b7b1d, type: 3}
   <PenaltyMultiplier>k__BackingField: 1
   <Conditions>k__BackingField:
   - <Type>k__BackingField: 2
@@ -32,4 +33,12 @@ MonoBehaviour:
     <TargetResource>k__BackingField: 0
     <TargetCustomerName>k__BackingField: 
     <Place>k__BackingField: 1
+  <Effects>k__BackingField:
+  - <Leave>k__BackingField: 1
+    <MakeOtherCustomersLeave>k__BackingField: 1
+    <MakeOtherCustomersEffect>k__BackingField: 0
+    <CustomerConditionType>k__BackingField: 4
+    <CustomerPenalty>k__BackingField: 0
+    <CustomerName>k__BackingField: 
+    <CustomerIndex>k__BackingField: -1
   <CurrentPenalty>k__BackingField: 4

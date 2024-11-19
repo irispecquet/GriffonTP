@@ -16,6 +16,7 @@ MonoBehaviour:
   <ID>k__BackingField: 2
   <ResourceType>k__BackingField: 1
   <Penalty>k__BackingField: 1
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 4ad120c0a89049d4982f3e4f4bc86fb4, type: 3}
   <PenaltyMultiplier>k__BackingField: 1
   <Conditions>k__BackingField:
   - <Type>k__BackingField: 2

@@ -9,8 +9,10 @@ public class CardData : ScriptableObject
     [field: SerializeField] public int ID { get; private set; }
     [field: SerializeField] public ResourceType ResourceType { get; private set; }
     [field: SerializeField] public CardPenalty Penalty { get; private set; }
+    [field: SerializeField] public Sprite Sprite { get; private set; }
     [field: SerializeField] public int PenaltyMultiplier { get; private set; } = 1;
     [field: SerializeField] public CardCondition[] Conditions { get; private set; }
+    [field: SerializeField] public CardEffect[] Effects { get; private set; }
     [field: SerializeField] public CardPenalty CurrentPenalty { get; private set; }
 }
 
@@ -58,6 +60,20 @@ public class CardCondition
 
     [field: SerializeField] public Place Place { get; private set; }
 }
+    
+[Serializable]
+public class CardEffect
+{
+    [field:SerializeField] public bool Leave { get; private set; }
+    [field:SerializeField] public bool MakeOtherCustomersLeave { get; private set; }
+    [field:SerializeField] public bool MakeOtherCustomersEffect { get; private set; }
+        
+    [field:SerializeField, ShowIf("@this.MakeOtherCustomersLeave || this.MakeOtherCustomersEffect")] public ConditionType CustomerConditionType { get; private set; }
+    [field:SerializeField, ShowIf("@this.CustomerConditionType == ConditionType.PENALTY")] public CardPenalty CustomerPenalty { get; private set; }
+    [field:SerializeField, ShowIf("@this.CustomerConditionType == ConditionType.CUSTOMER")] public string CustomerName { get; private set; }
+    [field:SerializeField, ShowIf("@this.CustomerConditionType == ConditionType.FLOOR")] public int CustomerIndex { get; private set; }
+}
+    
 
 public enum ConditionType
 {
