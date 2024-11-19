@@ -10,8 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ac9965d526e4acfa25bde76dc2063e7, type: 3}
-  m_Name: CardData_ReligieuseAbstinante
+  m_Name: CardData_Geant
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: La Religieuse abstinante
-  <Consumption>k__BackingField: 0
-  <NegativeEffects>k__BackingField: 02000000
+  <Name>k__BackingField: "Le G\xE9ant charitable"
+  <ResourceType>k__BackingField: 2
+  <Penalty>k__BackingField: 2
+  <PenaltyMultiplier>k__BackingField: 1
+  <Conditions>k__BackingField: []
+  <CurrentPenalty>k__BackingField: 0

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ac9965d526e4acfa25bde76dc2063e7, type: 3}
+  m_Name: CardData_Chasseur
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Le Chasseur Sensible
+  <ResourceType>k__BackingField: 2
+  <Penalty>k__BackingField: 4
+  <PenaltyMultiplier>k__BackingField: 1
+  <Conditions>k__BackingField:
+  - <Type>k__BackingField: 2
+    <Value>k__BackingField: 0
+    <Penalty>k__BackingField: 0
+    <Resource>k__BackingField: 1
+    <CustomerName>k__BackingField: 
+    <Comparison>k__BackingField: 0
+    <Operator>k__BackingField: 4
+    <Position>k__BackingField: 0
+    <TargetType>k__BackingField: 2
+    <TargetValue>k__BackingField: 5
+    <TargetPenalty>k__BackingField: 0
+    <TargetResource>k__BackingField: 2
+    <TargetCustomerName>k__BackingField: 
+    <Place>k__BackingField: 1
+  <CurrentPenalty>k__BackingField: 1
