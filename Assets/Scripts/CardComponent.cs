@@ -106,7 +106,7 @@ public class CardComponent : MonoBehaviour
                    (condition.Position != RelativePosition.LOWEST || cardIndex < dataByPlace.Length - 1);
         }
 
-        return condition.Comparison != ComparisonType.OPERATOR || 
+        return condition.Comparison != ComparisonType.OPERATOR ||
                !ComparisonEvaluator.Evaluate(cardIndex, condition.Operator, condition.TargetValue);
     }
 
@@ -164,57 +164,126 @@ public class CardComponent : MonoBehaviour
 
         return true;
     }
-        
+
     #endregion // CONDITIONS
 
     #region EFFECTS
 
-    private void ExecuteEffect()
+    public void ExecuteEffect()
     {
         CardData[] customers = GetDataByPlace(Place.HOSTEL);
-        
+        int cardIndex = Array.IndexOf(customers, CardData);
+
         foreach (CardEffect effect in CardData.Effects)
         {
-            if(effect.Leave)
+            if (effect.Leave)
+            {
                 Leave();
+                continue;
+            }
+
+            if (effect.MakeOtherCustomersLeave || effect.MakeOtherCustomersEffect)
+            {
+                List<CardComponent> leavingCustomers = new List<CardComponent>();
+                List<CardComponent> effectCustomers = new List<CardComponent>();
+
+                EvaluateEffectTargets(effect, customers, cardIndex, leavingCustomers, effectCustomers);
+
+                ApplyEffectToCustomers(leavingCustomers, effectCustomers);
+            }
+        }
+    }
+
+    private void EvaluateEffectTargets(CardEffect effect, CardData[] customers, int cardIndex, List<CardComponent> leavingCustomers, List<CardComponent> effectCustomers)
+    {
+        switch (effect.CustomerConditionType)
+        {
+            case ConditionType.PENALTY:
+                AddCustomersByPenalty(effect, customers, leavingCustomers, effectCustomers);
+                break;
+            case ConditionType.CUSTOMER:
+                AddCustomersByName(effect, customers, leavingCustomers, effectCustomers);
+                break;
+            case ConditionType.FLOOR:
+                AddCustomersByFloor(effect, customers, cardIndex, leavingCustomers);
+                break;
+        }
+    }
+
+    private void AddCustomersByPenalty(CardEffect effect, CardData[] customers, List<CardComponent> leavingCustomers, List<CardComponent> effectCustomers)
+    {
+        foreach (CardData customer in customers)
+        {
+            if (customer.Penalty != effect.CustomerPenalty)
+                continue;
+
+            CardComponent cardComponent = GetCardComponent(customer.ID);
 
             if (effect.MakeOtherCustomersLeave)
-            {
-                List<CardData> leavingCustomers = new List<CardData>();
-                
-                if (effect.CustomerConditionType == ConditionType.PENALTY)
-                {
-                    foreach (CardData customer in customers)
-                    {
-                        if (customer.Penalty == effect.CustomerPenalty)
-                            leavingCustomers.Add(customer);
-                    }
-                }
+                leavingCustomers.Add(cardComponent);
 
-                foreach (CardData leavingCustomer in leavingCustomers)
-                {
-                    
-                }
-            }
-                
+            if (effect.MakeOtherCustomersEffect)
+                effectCustomers.Add(cardComponent);
         }
+    }
+
+    private void AddCustomersByName(CardEffect effect, CardData[] customers, List<CardComponent> leavingCustomers, List<CardComponent> effectCustomers)
+    {
+        foreach (CardData customer in customers)
+        {
+            if (!customer.Name.Contains(effect.CustomerName))
+                continue;
+
+            CardComponent cardComponent = GetCardComponent(customer.ID);
+
+            if (effect.MakeOtherCustomersLeave)
+                leavingCustomers.Add(cardComponent);
+
+            if (effect.MakeOtherCustomersEffect)
+                effectCustomers.Add(cardComponent);
+        }
+    }
+
+    private void AddCustomersByFloor(CardEffect effect, CardData[] customers, int cardIndex, List<CardComponent> leavingCustomers)
+    {
+        int index = cardIndex + (int)Mathf.Sign(effect.CustomerIndex) * Mathf.Abs(effect.CustomerIndex);
+
+        if (index >= 0 && index < customers.Length)
+        {
+            CardComponent cardComponent = GetCardComponent(customers[index].ID);
+            leavingCustomers.Add(cardComponent);
+        }
+    }
+
+    private void ApplyEffectToCustomers(List<CardComponent> leavingCustomers, List<CardComponent> effectCustomers)
+    {
+        foreach (CardComponent leavingCustomer in leavingCustomers)
+            leavingCustomer.Leave();
+
+        foreach (CardComponent effectCustomer in effectCustomers)
+            effectCustomer.ExecuteEffect();
+    }
+
+    private CardComponent GetCardComponent(int customerId)
+    {
+        return SystemManager.Instance.CardsOnBoard[customerId].GetComponent<CardComponent>();
     }
 
     #endregion // EFFECTS
 
     private void Leave()
     {
-        
     }
-    
+
     private void OnMouseDown()
     {
-        if (SystemManager.Instance.currentState == SystemManager.Instance.PubState && SystemManager.Instance.CardSelected == null)
+        if (SystemManager.Instance.currentState == SystemManager.Instance.PubState &&
+            SystemManager.Instance.CardSelected == null)
         {
             SystemManager.Instance.CardSelected = this.gameObject;
         }
     }
-    
+
     private CardData[] GetDataByPlace(Place place)
     {
         if (place == Place.BAR)
