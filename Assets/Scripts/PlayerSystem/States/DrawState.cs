@@ -16,7 +16,7 @@ public class DrawState : IStateSystem
 
         for (int i = 0; i < 4 - numberCardsPub; i++)
         {
-            CardData cardToChange = controller.Drawer.GetCard(numberCardsDrawer - 1 - i);
+            CardData cardToChange = controller.Drawer[numberCardsDrawer - 1 - i];
 
             controller.Pub.AddCard(cardToChange);
             controller.Drawer.DeleteCard(cardToChange);

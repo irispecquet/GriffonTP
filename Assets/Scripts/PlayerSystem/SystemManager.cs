@@ -19,9 +19,9 @@ public class SystemManager : MonoBehaviour
 
     #region States
     public IStateSystem currentState;
-    public DrawState DrawState = new DrawState();
-    public PubState PubState = new PubState();
-    public HostelState HostelState = new HostelState();
+    public DrawState DrawState = new();
+    public PubState PubState = new();
+    public HostelState HostelState = new();
     #endregion States
 
     public CardDrawer Drawer;
