@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CardDrawer : MonoBehaviour
 {
-    public List<Transform> CardsTransform;
+    public List<CardPlace> CardPlaces;
     [SerializeField] List<CardData> _cards = new();
 
     public void AddCard(CardData card)
@@ -32,7 +33,7 @@ public class CardDrawer : MonoBehaviour
         }
     }
 
-    private CardData GetCard(CardData card)
+    public CardData GetCard(CardData card)
     {
         CardData cardData = null;
 
@@ -45,7 +46,7 @@ public class CardDrawer : MonoBehaviour
         return cardData;
     }
 
-    private CardData GetCard(int cardNumber)
+    public  CardData GetCard(int cardNumber)
     {
         if (cardNumber < _cards.Count)
             return _cards[cardNumber];
@@ -54,11 +55,29 @@ public class CardDrawer : MonoBehaviour
         return null;
     }
 
-    public CardData this[int cardNumber] => GetCard(cardNumber);
-    public CardData this[CardData card] => GetCard(card);
+    //public CardData this[int cardNumber] => GetCard(cardNumber);
+    //public CardData this[CardData card] => GetCard(card);
 
     public int GetCardLength()
     {
         return _cards.Count;
     }
+
+    public int GetCardPosInList(CardData card)
+    {
+        for (int i = 0; i < _cards.Count; i++)
+        {
+            if (_cards[i] == card)
+                return i;
+        }
+
+        return -1;
+    }
+}
+
+[Serializable]
+public class CardPlace
+{
+    public Transform TransformCard;
+    public CardData CardInPlace;
 }

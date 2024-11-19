@@ -156,7 +156,7 @@ MonoBehaviour:
   Pub: {fileID: 8781502100551278465}
   Hostel: {fileID: 8509855625858473544}
   _cardPrefab: {fileID: 6065282099311972518, guid: fe52bd672505a284fa368184faaecebf, type: 3}
-  _cardDatas:
+  CardDatas:
   - {fileID: 11400000, guid: b6c1a08792814534da990a3a1b9c592b, type: 2}
   - {fileID: 11400000, guid: 136bda9291aaac24abd74b53a6a1272a, type: 2}
   - {fileID: 11400000, guid: 565a905c3af28684a9979d732cb81905, type: 2}
@@ -175,6 +175,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8f8bd5aa319f63e47ab9977a2577eed3, type: 2}
   - {fileID: 11400000, guid: f8d5fe079e948da4286d96c0d96ef558, type: 2}
   - {fileID: 11400000, guid: dad850f0fc0fee243b546b894ddc465c, type: 2}
+  CardSelected: {fileID: 0}
+  CardTimerMove: 1.5
 --- !u!4 &438982155
 Transform:
   m_ObjectHideFlags: 0
@@ -893,8 +895,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faff2809decdcb1488baec9b19b2fb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardsTransform:
-  - {fileID: 3679814247118378454}
+  CardPlaces:
+  - TransformCard: {fileID: 3679814247118378454}
+    IsOccupied: 0
   _cards: []
 --- !u!1 &5161101505675757202
 GameObject:
@@ -1509,11 +1512,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faff2809decdcb1488baec9b19b2fb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardsTransform:
-  - {fileID: 576998934615795433}
-  - {fileID: 8559769533682963226}
-  - {fileID: 8284247855680720906}
-  - {fileID: 1598883628768853556}
+  CardPlaces:
+  - TransformCard: {fileID: 576998934615795433}
+    IsOccupied: 0
+  - TransformCard: {fileID: 8559769533682963226}
+    IsOccupied: 0
+  - TransformCard: {fileID: 8284247855680720906}
+    IsOccupied: 0
+  - TransformCard: {fileID: 1598883628768853556}
+    IsOccupied: 0
+  - TransformCard: {fileID: 1743164295}
+    IsOccupied: 0
   _cards: []
 --- !u!4 &8559769533682963226
 Transform:
@@ -1643,11 +1652,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faff2809decdcb1488baec9b19b2fb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardsTransform:
-  - {fileID: 982431062662926575}
-  - {fileID: 2218646575612510070}
-  - {fileID: 7401156884599053}
-  - {fileID: 8756710455985508323}
+  CardPlaces:
+  - TransformCard: {fileID: 982431062662926575}
+    IsOccupied: 0
+  - TransformCard: {fileID: 2218646575612510070}
+    IsOccupied: 0
+  - TransformCard: {fileID: 7401156884599053}
+    IsOccupied: 0
+  - TransformCard: {fileID: 8756710455985508323}
+    IsOccupied: 0
   _cards: []
 --- !u!4 &8810143123978900746
 Transform:
@@ -1678,8 +1691,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faff2809decdcb1488baec9b19b2fb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CardsTransform:
-  - {fileID: 1846648357102227182}
+  CardPlaces:
+  - TransformCard: {fileID: 1846648357102227182}
+    IsOccupied: 0
   _cards: []
 --- !u!212 &8896237829027281701
 SpriteRenderer:

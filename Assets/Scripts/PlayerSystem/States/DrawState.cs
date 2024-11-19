@@ -10,6 +10,8 @@ public class DrawState : IStateSystem
 
     public void OnEnter(SystemManager controller)
     {
+        _timer = controller.CardTimerMove;
+
         int numberCardsPub = controller.Pub.GetCardLength();
 
         if (numberCardsPub >= 4)
@@ -22,17 +24,15 @@ public class DrawState : IStateSystem
             if (controller.Drawer.GetCardLength() <= 0)
                 break;
 
-            CardData cardToChange = controller.Drawer[numberCardsDrawer - 1 - i];
+            CardData cardToChange = controller.Drawer.GetCard(numberCardsDrawer - 1 - i);
 
             controller.Pub.AddCard(cardToChange);
             controller.Drawer.DeleteCard(cardToChange);
 
             _movingCards.Add(SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform);
-
+            controller.Pub.CardPlaces[i].CardInPlace = cardToChange;
             //SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform.position = controller.Pub.CardsTransform[i].position;
         }
-
-        _timer = (4 - numberCardsPub) * 100;
     }
 
     public void UpdateState(SystemManager controller)
@@ -41,7 +41,18 @@ public class DrawState : IStateSystem
         {
             _timer -= Time.deltaTime;
 
-            Vector3.Lerp(_movingCards[0].position, controller.Pub.CardsTransform[0].position, 0.01f);
+            for (int j = 0; j < _movingCards.Count; j++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    var card = controller.Pub.CardPlaces[i].CardInPlace;
+
+                    if (card != null && card == _movingCards[j].GetComponent<CardComponent>().CardData)
+                    {
+                        _movingCards[j].position = Vector3.Lerp(_movingCards[j].position, controller.Pub.CardPlaces[i].TransformCard.position, 0.01f);
+                    }
+                }
+            }
         }
         else
         {
