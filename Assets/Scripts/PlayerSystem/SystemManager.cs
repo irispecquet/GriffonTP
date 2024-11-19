@@ -30,16 +30,18 @@ public class SystemManager : MonoBehaviour
     public CardDrawer Hostel;
 
     [SerializeField] GameObject _cardPrefab;
-    public CardData[] _cardDatas;
+    public CardData[] CardDatas;
     public Dictionary<int, GameObject> CardsOnBoard = new();
+    public GameObject CardSelected;
+    public float CardTimerMove = 1.5f;
 
     private void Start()
     {
-        for (int i = 0; i < _cardDatas.Length; i++)
+        for (int i = 0; i < CardDatas.Length; i++)
         {
             GameObject card = Instantiate(_cardPrefab, Drawer.transform.position, Quaternion.identity);
             CardComponent cardData = card.GetComponent<CardComponent>();
-            cardData.CardData = _cardDatas[i];
+            cardData.CardData = CardDatas[i];
             CardsOnBoard.Add(cardData.CardData.ID, card);
         }
 
@@ -69,6 +71,8 @@ public class SystemManager : MonoBehaviour
             }
             currentState = newState;
             currentState.OnEnter(this);
+
+            Debug.Log("State change " + newState.ToString());
         }
     }
 }
