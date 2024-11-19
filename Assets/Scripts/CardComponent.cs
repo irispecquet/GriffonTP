@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -165,6 +167,46 @@ public class CardComponent : MonoBehaviour
         
     #endregion // CONDITIONS
 
+    #region EFFECTS
+
+    private void ExecuteEffect()
+    {
+        CardData[] customers = GetDataByPlace(Place.HOSTEL);
+        
+        foreach (CardEffect effect in CardData.Effects)
+        {
+            if(effect.Leave)
+                Leave();
+
+            if (effect.MakeOtherCustomersLeave)
+            {
+                List<CardData> leavingCustomers = new List<CardData>();
+                
+                if (effect.CustomerConditionType == ConditionType.PENALTY)
+                {
+                    foreach (CardData customer in customers)
+                    {
+                        if (customer.Penalty == effect.CustomerPenalty)
+                            leavingCustomers.Add(customer);
+                    }
+                }
+
+                foreach (CardData leavingCustomer in leavingCustomers)
+                {
+                    
+                }
+            }
+                
+        }
+    }
+
+    #endregion // EFFECTS
+
+    private void Leave()
+    {
+        
+    }
+    
     private void OnMouseDown()
     {
         if (SystemManager.Instance.currentState == SystemManager.Instance.PubState && SystemManager.Instance.CardSelected == null)
