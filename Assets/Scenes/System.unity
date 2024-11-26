@@ -156,6 +156,7 @@ MonoBehaviour:
   Pub: {fileID: 8781502100551278465}
   Hostel: {fileID: 8509855625858473544}
   _cardPrefab: {fileID: 3133862978462177783, guid: fe52bd672505a284fa368184faaecebf, type: 3}
+  _cardPlacementPrefab: {fileID: 0}
   CardDatas:
   - {fileID: 11400000, guid: b6c1a08792814534da990a3a1b9c592b, type: 2}
   - {fileID: 11400000, guid: 136bda9291aaac24abd74b53a6a1272a, type: 2}

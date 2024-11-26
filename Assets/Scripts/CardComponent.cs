@@ -285,7 +285,7 @@ public class CardComponent : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (SystemManager.Instance.currentState == SystemManager.Instance.PubState && SystemManager.Instance.CardSelected == null)
+        if (SystemManager.Instance.currentState == SystemManager.Instance.PubState && SystemManager.Instance.CardSelected == null && SystemManager.Instance.Pub.GetCard(CardData) != null)
             SystemManager.Instance.CardSelected = this;
     }
 

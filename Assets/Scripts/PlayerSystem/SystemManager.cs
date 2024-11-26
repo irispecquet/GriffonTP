@@ -30,6 +30,7 @@ public class SystemManager : MonoBehaviour
     public CardDrawer Hostel;
 
     [SerializeField] CardComponent _cardPrefab;
+    [SerializeField] Transform _cardPlacementPrefab;
     public CardData[] CardDatas;
     public Dictionary<int, CardComponent> CardsOnBoard = new();
     public CardComponent CardSelected;
@@ -42,6 +43,8 @@ public class SystemManager : MonoBehaviour
             CardComponent card = Instantiate(_cardPrefab, Drawer.transform.position, Quaternion.identity);
             card.CardData = CardDatas[i];
             CardsOnBoard.Add(card.CardData.ID, card);
+
+            //Transform place = Instantiate(_cardPlacementPrefab, Hostel.transform);
         }
 
         foreach (var item in CardsOnBoard)
