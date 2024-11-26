@@ -18,7 +18,6 @@ public class HostelState : IStateSystem
 
             if (!cardComponent.IsStaying())
             {
-                cardComponent.ExecuteEffect();
                 _movingCards.Add(cardComponent.transform);
                 CardData cardToChange = cardComponent.CardData;
                 controller.Trash.AddCard(cardToChange);
