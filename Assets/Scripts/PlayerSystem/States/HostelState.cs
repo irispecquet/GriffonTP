@@ -16,7 +16,13 @@ public class HostelState : IStateSystem
             int id = controller.Hostel.GetCard(i).ID;
 
             if (id % 2 == 0)
+            {
                 _movingCards.Add(SystemManager.Instance.CardsOnBoard[id].transform);
+                CardData cardToChange = SystemManager.Instance.CardsOnBoard[id].GetComponent<CardComponent>().CardData;
+                controller.Trash.AddCard(cardToChange);
+                controller.Hostel.CardPlaces[controller.Hostel.GetCardPosInList(cardToChange)].CardInPlace = null;
+                controller.Hostel.DeleteCard(cardToChange);
+            }
         }
 
         //Check les effets des cartes
