@@ -6,7 +6,14 @@ using UnityEngine;
 
 public class CardComponent : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    
     public CardData CardData;
+
+    private void Start()
+    {
+        _spriteRenderer.sprite = CardData.Sprite;
+    }
 
     #region CONDITIONS
 
