@@ -5,13 +5,13 @@ using UnityEngine;
 public class PubState : IStateSystem
 {
     float _timer = 0;
-    int iterationNumber = 0;
+    int iterationNumber = -1;
 
     public void OnEnter(SystemManager controller)
     {
         _timer = controller.CardTimerMove;
 
-        for (int i = 0; i < controller.Hostel.GetCardLength(); i++)
+        for (int i = 0; i < controller.Hostel.CardPlaces.Count; i++)
         {
             if (controller.Hostel.CardPlaces[i].CardInPlace == null)
             {

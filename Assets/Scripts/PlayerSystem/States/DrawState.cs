@@ -6,6 +6,7 @@ public class DrawState : IStateSystem
 {
     float _timer = 0;
     List<Transform> _movingCards = new();
+    List<Transform> _cardsDestination = new();
 
     public void OnEnter(SystemManager controller)
     {
@@ -14,15 +15,15 @@ public class DrawState : IStateSystem
         if (controller.Pub.GetCardLength() >= 4)
             return;
 
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < controller.Pub.CardPlaces.Count; j++)
         {
-            if (controller.Pub.CardPlaces[j].CardInPlace == null)
-            {
                 if (controller.Drawer.GetCardLength() < 0)
                     break;
 
                 CardData cardToChange = controller.Drawer.GetCard(controller.Drawer.GetCardLength() - 1);
 
+            if (controller.Pub.CardPlaces[j].CardInPlace == null)
+            {
                 controller.Pub.AddCard(cardToChange);
                 controller.Drawer.DeleteCard(cardToChange);
 
@@ -48,5 +49,6 @@ public class DrawState : IStateSystem
     public void OnExit(SystemManager controller)
     {
         _movingCards.Clear();
+        _cardsDestination.Clear();
     }
 }
