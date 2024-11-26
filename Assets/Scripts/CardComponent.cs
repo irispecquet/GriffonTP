@@ -22,7 +22,7 @@ public class CardComponent : MonoBehaviour
     {
         if (!CheckPenalty())
         {
-            Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS NOT STAYING");
+            Leave();
             return false;
         }
 
@@ -33,7 +33,7 @@ public class CardComponent : MonoBehaviour
 
             if (!EvaluateCondition(condition, dataByPlace, cardIndex))
             {
-                Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS NOT STAYING");
+                Leave();
                 return false;
             }
         }
@@ -280,15 +280,13 @@ public class CardComponent : MonoBehaviour
 
     private void Leave()
     {
+        Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS NOT STAYING");
     }
 
     private void OnMouseDown()
     {
-        if (SystemManager.Instance.currentState == SystemManager.Instance.PubState &&
-            SystemManager.Instance.CardSelected == null)
-        {
+        if (SystemManager.Instance.currentState == SystemManager.Instance.PubState && SystemManager.Instance.CardSelected == null)
             SystemManager.Instance.CardSelected = this.gameObject;
-        }
     }
 
     private CardData[] GetDataByPlace(Place place)
