@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 
 public class DrawState : IStateSystem
 {
@@ -27,42 +26,27 @@ public class DrawState : IStateSystem
                 controller.Pub.AddCard(cardToChange);
                 controller.Drawer.DeleteCard(cardToChange);
 
-                _movingCards.Add(SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform);
+                Transform cardTransform = SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform;
+                _movingCards.Add(cardTransform);
 
                 controller.Pub.CardPlaces[j].CardInPlace = cardToChange;
+
+                int a = j;
+                cardTransform.DOMove(controller.Pub.CardPlaces[j].TransformCard.position, _timer).SetEase(Ease.OutQuad).OnComplete(() => controller.Pub.CardPlaces[a].CardInPlace = cardToChange);
             }
         }
-        //SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform.position = controller.Pub.CardsTransform[i].position;
     }
 
     public void UpdateState(SystemManager controller)
     {
-        if (_timer >= 0)
-        {
-            _timer -= Time.deltaTime;
-
-            for (int i = 0; i < _movingCards.Count; i++)
-            {
-                for (int j = 0; j < controller.Pub.CardPlaces.Count; j++)
-                {
-                    CardData card = controller.Pub.CardPlaces[j].CardInPlace;
-
-                    if (card == _movingCards[i].GetComponent<CardComponent>().CardData)
-                    {
-                        _movingCards[i].position = Vector3.Lerp(_movingCards[i].position, controller.Pub.CardPlaces[j].TransformCard.position, 0.01f);
-                    }
-                }
-            }
-        }
-        else
-        {
+        if (_timer <= 0)
             controller.ChangeState(controller.PubState);
-        }
+        else
+            _timer -= Time.deltaTime;
     }
 
     public void OnExit(SystemManager controller)
     {
         _movingCards.Clear();
-
     }
 }
