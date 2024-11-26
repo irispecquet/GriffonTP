@@ -286,7 +286,7 @@ public class CardComponent : MonoBehaviour
     private void OnMouseDown()
     {
         if (SystemManager.Instance.currentState == SystemManager.Instance.PubState && SystemManager.Instance.CardSelected == null)
-            SystemManager.Instance.CardSelected = this.gameObject;
+            SystemManager.Instance.CardSelected = this;
     }
 
     private CardData[] GetDataByPlace(Place place)

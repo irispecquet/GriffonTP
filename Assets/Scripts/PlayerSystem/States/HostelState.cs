@@ -14,11 +14,13 @@ public class HostelState : IStateSystem
         for (int i = 0; i < controller.Hostel.GetCardLength(); i++)
         {
             int id = controller.Hostel.GetCard(i).ID;
+            CardComponent cardComponent = SystemManager.Instance.CardsOnBoard[id];
 
-            if (id % 2 == 0)
+            if (!cardComponent.IsStaying())
             {
-                _movingCards.Add(SystemManager.Instance.CardsOnBoard[id].transform);
-                CardData cardToChange = SystemManager.Instance.CardsOnBoard[id].GetComponent<CardComponent>().CardData;
+                cardComponent.ExecuteEffect();
+                _movingCards.Add(cardComponent.transform);
+                CardData cardToChange = cardComponent.CardData;
                 controller.Trash.AddCard(cardToChange);
                 controller.Hostel.CardPlaces[controller.Hostel.GetCardPosInList(cardToChange)].CardInPlace = null;
                 controller.Hostel.DeleteCard(cardToChange);
@@ -48,6 +50,5 @@ public class HostelState : IStateSystem
 
     public void OnExit(SystemManager controller)
     {
-        //Avant d'être changé
     }
 }
