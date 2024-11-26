@@ -77,6 +77,17 @@ public class CardDrawer : MonoBehaviour
 
         return -1;
     }
+
+    public int GetCardPosInPlaces(CardData card)
+    {
+        for (int i = 0; i < CardPlaces.Count; i++)
+        {
+            if (CardPlaces[i].CardInPlace == card)
+                return i;
+        }
+
+        return -1;
+    }
 }
 
 [Serializable]

@@ -22,7 +22,7 @@ public class HostelState : IStateSystem
                 _movingCards.Add(cardComponent.transform);
                 CardData cardToChange = cardComponent.CardData;
                 controller.Trash.AddCard(cardToChange);
-                controller.Hostel.CardPlaces[controller.Hostel.GetCardPosInList(cardToChange)].CardInPlace = null;
+                controller.Hostel.CardPlaces[controller.Hostel.GetCardPosInPlaces(cardToChange)].CardInPlace = null;
                 controller.Hostel.DeleteCard(cardToChange);
             }
         }

@@ -155,7 +155,7 @@ MonoBehaviour:
   Trash: {fileID: 4882419831817908219}
   Pub: {fileID: 8781502100551278465}
   Hostel: {fileID: 8509855625858473544}
-  _cardPrefab: {fileID: 6065282099311972518, guid: fe52bd672505a284fa368184faaecebf, type: 3}
+  _cardPrefab: {fileID: 3133862978462177783, guid: fe52bd672505a284fa368184faaecebf, type: 3}
   CardDatas:
   - {fileID: 11400000, guid: b6c1a08792814534da990a3a1b9c592b, type: 2}
   - {fileID: 11400000, guid: 136bda9291aaac24abd74b53a6a1272a, type: 2}
@@ -897,7 +897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardPlaces:
   - TransformCard: {fileID: 3679814247118378454}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   _cards: []
 --- !u!1 &5161101505675757202
 GameObject:
@@ -1514,15 +1514,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardPlaces:
   - TransformCard: {fileID: 576998934615795433}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   - TransformCard: {fileID: 8559769533682963226}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   - TransformCard: {fileID: 8284247855680720906}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   - TransformCard: {fileID: 1598883628768853556}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   - TransformCard: {fileID: 1743164295}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   _cards: []
 --- !u!4 &8559769533682963226
 Transform:
@@ -1654,13 +1654,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardPlaces:
   - TransformCard: {fileID: 982431062662926575}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   - TransformCard: {fileID: 2218646575612510070}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   - TransformCard: {fileID: 7401156884599053}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   - TransformCard: {fileID: 8756710455985508323}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   _cards: []
 --- !u!4 &8810143123978900746
 Transform:
@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardPlaces:
   - TransformCard: {fileID: 1846648357102227182}
-    IsOccupied: 0
+    CardInPlace: {fileID: 0}
   _cards: []
 --- !u!212 &8896237829027281701
 SpriteRenderer:

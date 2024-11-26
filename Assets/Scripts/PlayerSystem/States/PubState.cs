@@ -42,8 +42,7 @@ public class PubState : IStateSystem
         controller.Hostel.AddCard(cardToChange);
         controller.Hostel.CardPlaces[iterationNumber].CardInPlace = cardToChange;
 
-        controller.Pub.CardPlaces[controller.Pub.GetCardPosInList(cardToChange)].CardInPlace = null;
-
+        controller.Pub.CardPlaces[controller.Pub.GetCardPosInPlaces(cardToChange)].CardInPlace = null;
         controller.Pub.DeleteCard(cardToChange);
 
         controller.CardSelected = null;
