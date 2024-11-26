@@ -37,7 +37,7 @@ public class PubState : IStateSystem
 
     public void OnExit(SystemManager controller)
     {
-        CardData cardToChange = controller.CardSelected.GetComponent<CardComponent>().CardData;
+        CardData cardToChange = controller.CardSelected.CardData;
 
         controller.Hostel.AddCard(cardToChange);
         controller.Hostel.CardPlaces[iterationNumber].CardInPlace = cardToChange;

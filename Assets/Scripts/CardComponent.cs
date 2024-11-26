@@ -185,7 +185,7 @@ public class CardComponent : MonoBehaviour
         {
             if (effect.Leave)
             {
-                Leave();
+                Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS NOT STAYING");
                 continue;
             }
 
@@ -280,7 +280,7 @@ public class CardComponent : MonoBehaviour
 
     private void Leave()
     {
-        Debug.Log($"{CardData.Name} (ID : {CardData.ID}) IS NOT STAYING");
+        ExecuteEffect();
     }
 
     private void OnMouseDown()
