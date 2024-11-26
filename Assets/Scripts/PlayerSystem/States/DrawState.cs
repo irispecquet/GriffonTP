@@ -5,8 +5,6 @@ using DG.Tweening;
 public class DrawState : IStateSystem
 {
     float _timer = 0;
-    List<Transform> _movingCards = new();
-    List<Transform> _cardsDestination = new();
 
     public void OnEnter(SystemManager controller)
     {
@@ -17,10 +15,10 @@ public class DrawState : IStateSystem
 
         for (int j = 0; j < controller.Pub.CardPlaces.Count; j++)
         {
-                if (controller.Drawer.GetCardLength() < 0)
-                    break;
+            if (controller.Drawer.GetCardLength() < 0)
+                break;
 
-                CardData cardToChange = controller.Drawer.GetCard(controller.Drawer.GetCardLength() - 1);
+            CardData cardToChange = controller.Drawer.GetCard(controller.Drawer.GetCardLength() - 1);
 
             if (controller.Pub.CardPlaces[j].CardInPlace == null)
             {
@@ -28,7 +26,6 @@ public class DrawState : IStateSystem
                 controller.Drawer.DeleteCard(cardToChange);
 
                 Transform cardTransform = SystemManager.Instance.CardsOnBoard[cardToChange.ID].transform;
-                _movingCards.Add(cardTransform);
 
                 controller.Pub.CardPlaces[j].CardInPlace = cardToChange;
 
@@ -48,7 +45,5 @@ public class DrawState : IStateSystem
 
     public void OnExit(SystemManager controller)
     {
-        _movingCards.Clear();
-        _cardsDestination.Clear();
     }
 }
